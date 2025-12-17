@@ -10,6 +10,7 @@ const guardarCarrito = () => {
 
 //VARIABLES DE CONTAINERS, BOTONES, INPUTS ETC
 const prodContainer = document.querySelector(".product-grid")
+const btnAgregarCarrito = document.querySelector(".btnAddCart")
 
 //FUNCION PLANTILLA INNERHTML
 const crearPlantillaProducto = (producto) => {
@@ -31,7 +32,7 @@ const crearPlantillaProducto = (producto) => {
             : "Agotado"
         }</span>
         </div>
-        <button type="button" class="btn primary"
+        <button type="button" class="btn primary btnAddCart"
         data-id="${id}
         data-nombre="${nombre}
         data-descripcion="${descripcion}
