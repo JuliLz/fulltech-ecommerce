@@ -3,7 +3,7 @@ const productos = [
     id: 1,
     nombre: "Teclado Mecánico RGB Pro",
     descripcion: "Teclado con switches Blue, retroiluminación personalizada y estructura de aluminio.",
-    categoria: "Teclados",
+    categoria: "Perifericos",
     precio: 8500,
     imagen: "https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=800",
     disponibilidad: "si",
@@ -13,7 +13,7 @@ const productos = [
     id: 2,
     nombre: "Mouse Gamer Predator",
     descripcion: "Sensor óptico de 16000 DPI, 6 botones programables y diseño ergonómico.",
-    categoria: "Mouses",
+    categoria: "Perifericos",
     precio: 4200,
     imagen: "https://images.pexels.com/photos/2106216/pexels-photo-2106216.jpeg?auto=compress&cs=tinysrgb&w=800",
     disponibilidad: "si",
@@ -23,7 +23,7 @@ const productos = [
     id: 3,
     nombre: "Auriculares HyperBlast 7.1",
     descripcion: "Sonido envolvente 7.1, micrófono con cancelación de ruido y almohadillas de memory foam.",
-    categoria: "Audio",
+    categoria: "Perifericos",
     precio: 12000,
     imagen: "https://images.pexels.com/photos/1649771/pexels-photo-1649771.jpeg?auto=compress&cs=tinysrgb&w=800",
     disponibilidad: "no",
@@ -33,7 +33,7 @@ const productos = [
     id: 4,
     nombre: "Pad Mouse XXL Galaxy",
     descripcion: "Superficie de tela de baja fricción y base de goma antideslizante de 90x40cm.",
-    categoria: "Accesorios",
+    categoria: "Perifericos",
     precio: 2500,
     imagen: "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=800&q=80",
     disponibilidad: "si",
@@ -53,7 +53,7 @@ const productos = [
     id: 6,
     nombre: "Mouse Inalámbrico Swift",
     descripcion: "Conexión de 2.4GHz sin latencia, batería recargable y ultra liviano.",
-    categoria: "Mouses",
+    categoria: "Perifericos",
     precio: 7800,
     imagen: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=800&q=80",
     disponibilidad: "si",
@@ -63,7 +63,7 @@ const productos = [
     id: 7,
     nombre: "Teclado TKL Compacto",
     descripcion: "Diseño sin teclado numérico para ganar espacio en el escritorio, switches Red silenciosos.",
-    categoria: "Teclados",
+    categoria: "Perifericos",
     precio: 6300,
     imagen: "https://images.unsplash.com/photo-1706970454339-e262d7db3244?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     disponibilidad: "no",
@@ -73,7 +73,7 @@ const productos = [
     id: 8,
     nombre: "Micrófono Condensador Streamer",
     descripcion: "Patrón cardioide, conexión USB plug and play con trípode incluido.",
-    categoria: "Audio",
+    categoria: "Perifericos",
     precio: 9500,
     imagen: "https://images.pexels.com/photos/3783471/pexels-photo-3783471.jpeg?auto=compress&cs=tinysrgb&w=800",
     disponibilidad: "si",
@@ -123,7 +123,7 @@ const productos = [
     id: 13,
     nombre: "Webcam Full HD 1080p",
     descripcion: "Ideal para streaming y videollamadas con enfoque automático y micrófono dual.",
-    categoria: "Accesorios",
+    categoria: "Perifericos",
     precio: 8200,
     imagen: "https://images.pexels.com/photos/4107120/pexels-photo-4107120.jpeg?auto=compress&cs=tinysrgb&w=800",
     disponibilidad: "si",
@@ -133,7 +133,7 @@ const productos = [
     id: 14,
     nombre: "Joystick Pro Wireless",
     descripcion: "Compatible con PC y Consolas, gatillos adaptativos y batería de larga duración.",
-    categoria: "Accesorios",
+    categoria: "Perifericos",
     precio: 14500,
     imagen: "https://images.pexels.com/photos/3945657/pexels-photo-3945657.jpeg?auto=compress&cs=tinysrgb&w=800",
     disponibilidad: "no",
@@ -150,3 +150,20 @@ const productos = [
     valoracion: 4.6
   }
 ];
+
+let cantProductos = productos.length
+
+const setearCantidad = (tamañoPagina) => {
+  let listaProductos = [];
+  for ( let i = 0; i < productos.length; i += tamañoPagina) {
+    listaProductos.push(productos.slice(i, i + tamañoPagina))
+  }
+  return listaProductos
+}
+
+const appState = {
+  productos: setearCantidad(4),
+  limiteProductos: setearCantidad(4).length,
+  indiceProductosActuales: 0,
+  filtroActivo: null,
+}

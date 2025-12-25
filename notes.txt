@@ -1,0 +1,331 @@
+---FUNCION (PUEDO LLAMARLA ANTES DE SER DECLARADA, SIN PROBLEMA)
+function nombre (arg1, arg2) {
+}
+
+---ARROW FUNCTION (NO PUEDO LLAMARLA ANTES DE SER DECLARADA), ES ANONIMA ASIQUE DEBO
+DARLE UN NOMBRE COMO A UNA VARIABLE
+const nombre = (arg1, arg2) => {
+}
+
+--CALLBACK: FUNCION QUE RECIBE COMO ARGUMENTO OTRA FUNCION
+let logSaludo = (nombre) => {
+    return console.log(`Tu nombre es: ${nombre}`)
+}
+
+let getnombre = (logSaludo) => {
+    let nombre = "Julian"
+    return logSaludo(nombre)
+}
+
+getnombre(logSaludo)
+
+--THIS: EN UNA FUNCION SE REFIERE A LA FUNCION EN SI MISMA, DENTRO DE UN OBJETO
+SE REFIERE A DICHO OBJETO.
+
+--CLASES: CONSTRUCTOR SI O SI NECESARIO PARA CREAR LA CLASE, SI DEFINO UNO LO NECESITO
+ESPECIFICAR AL CREAR UNA NUEVA INSTANCIA DE ESA CLASE(EJ NOMBRE).
+EN ESTE CASO, THIS HACE REFERENCIA AL OBJETO JUAN QUE PERTENECE A LA CLASE PERSONA.
+LAS CLASES PUEDEN TENER SOLO 1 METODO CONSTRUCTOR
+-----EJEMPLO
+class Persona{
+    constructor(nombre) {
+        this.nombre = nombre
+    }
+    presentarse(){
+        console.log(`Hola, soy ${this.nombre}`)
+    }
+}
+
+const Juan = new Persona('Juan')
+Juan.presentarse()
+
+--EJEMPLO 2
+class Robot{
+    constructor(color, posicionX, posicionY) {
+        this.color = color;
+        this.posicionX = posicionX;
+        this.posicionY = posicionY
+    }
+    desplazar = function (X,Y) {
+        this.posicionX = X ; this.posicionY = Y;
+    }
+    posicion = function () {
+        console.log(`El robot ${this.color} está en x: ${this.posicionX} y: ${this.posicionY}`)
+    }
+}
+
+--EXTENDER CLASE: CREAR UNA CLASE A PARTIR DE OTRA YA EXISTENTE (SUPER), LA NUEVA
+HEREDA TODAS LAS PROPIEDADES DE SU SUPER Y PUEDE AGREGAR NUEVAS.
+
+class Perro extends Animal {
+    constructor(nombre, sonido, raza) {
+        super(nombre, sonido); 
+        this. raza = raza
+    }
+    //CREO METODO NUEVO PARA EL OBJETO PERRO
+    ladrar() {
+        console.log(`${this.nombre} ladra ${this.sonido}`)
+    }
+}
+
+//CREO INSTANCIA DE LA SUBCLASE
+const Pipe = new Perro("Pipe", "Guau", "Callejero");
+Pipe.ladrar();
+Pipe.hablar();
+
+//SPREAD OPERATOR PARA OBJETOS O LOOPS
+propago informacion para una nueva variable
+let array = [1,2,3,4,5]
+let spreadArray = [...array] //con los 3 puntitos le decimos a spreadarray que tome
+como referencia la informacion de array
+
+//OPERADOR REST: El último parámetro de una función se puede prefijar con ..., 
+lo que hará que todos los argumentos restantes (suministrados por el usuario) 
+se coloquen dentro de un array de javascript "estándar".
+Sólo el último parámetro puede ser un "parámetro rest".
+
+let AvgNotes = (nombre, apellido, ...notes) => {
+    let notesArr = [...notes]
+    let sum = 0;
+    for (let index = 0; index < notesArr.length; index++) {
+        sum += notesArr[index]
+    }
+    return console.log(`El promedio de las notas es: ${sum / notesArr.length}`);
+}
+AvgNotes("Julian", "Lorenzatti", 6,7,5)
+//El promedio de las notas es: 6
+
+//DESESTRUCTURAR ARREGLOS, LE DAMOS NOMBRE A CADA UNO DE SUS ELEMENTOS PARA ASI
+LLARMARLOS
+let array5 = [
+    "Julian",
+    "Lorenzatti",
+    5,
+    10,
+    8
+]
+
+const [nombreee, apellido, nota1, nota2, ...rest] = array5
+console.log(nombreee);
+//"Julian"
+console.log(rest);
+//8
+
+const {nombre, apellido, nota1} = array5
+console.log(nombre)
+//"Julian"
+
+//METODOS DE STRINGS
+-.toUpperCase
+-.toLowerCase
+-.replace("toda string q diga x cosa", "reemplazo por esto")
+-.split(",") //divido el string en un objeto por cada "," que haya
+|--> let palabra = "Hola, como estas"
+|--> console.log(palabra.split(","))
+|-->//[ 'Hola', ' como estas' ]
+-.repeat
+-.charAt(x) nos dice que caracter esta en la posicion x
+-.concat(string1,string2,stringN)
+-.includes("x") verifica si está x ESPECIFICAMENTE EN MINUSCULA Y SOLO x.
+|--> Hace comparacion estricta
+-.slice(1,5) //devuelve el string desde el index 1 al 5
+|-->console.log(palabra.slice(1,5))
+|-->//ola,
+
+//METODOS DE ARRAYS
+.length //cantidad de ELEMENTOS
+.indexOf(elemento) //en que indice está el elemento elemento (si no existe tira -1)
+.pop // extrae y retorna el ultimo elemento del array
+.shift // extrae y retorna el primer elemento del array
+.push(nuevo_elemento) // agrega este nuevo_elemento a la ultima pos. del array
+.unshift (nuevo_elemento) // agrega este nuevo_elemento a la primera pos. del array
+.reverse // da vuelta todos los elementos de lugar
+.toString // pasa todo a string
+.join("-") //todos los elementos del array van a quedar separados por "-"
+.concat(otro_array) // concateno con otro_array
+.slice(2,5) // recorta array desde 2 (incluyendolo) hasta el 5 (sin incluirlo)
+.includes("x") verifica si está x ESPECIFICAMENTE EN MINUSCULA Y SOLO x.
+--------------------
+.map((numero)=> {
+    return numero * 2
+})
+//ITERA EL ARRAY Y CADA ELEMENTO DE MI ARRAY QUEDA DEFINIDO POR "numero"
+//DEVUELVE UN NUEVO ARRAY CON CADA ELEMENTO Y APLICA LA FUNCION
+------------------------------
+.filter 
+let numsMayorA5 = numeros.filter((nums)=> {
+    return nums > 5;
+})
+//recorre el array y devuelve solo los elementos con x condicion
+------------------------------
+.find 
+let encontrarmayora4 = numeros.find((nums) => {
+    return nums > 4
+})
+//devuelve el primer elemento del array que cumpla con la condicion, sino 
+undefined, devuelve el elemento en si, no un nuevo array
+------------------------------
+.reduce
+let suma = numeros.reduce((acumulador, nums) => {
+    acumulador = acumulador + nums
+    return acumulador
+}, 0)
+//cada elemento del array (nums) lo puede acumular en acumulador, reduce todos
+los elementos del array a uno solo
+------------------------------
+.forEach
+numeros.forEach((nums) => {
+    return nums*2
+})
+//Recorre el array y por cada elemento dentro del mismo hace lo siguiente
+------------------------------
+.some
+let hayMayorA5 = numeros.some((nums) => {
+    return nums > 5
+})
+//Devuelve un booleano si hay algun elemento que cumpla con la condicion
+------------------------------
+.every
+let todosMayoresA5 = numeros.every((nums) =>{
+    return nums > 5
+})
+//Devuelve booleano si todos los elementos del array cumplen con la condicion
+-----------------------------
+.sort
+let ordenar = arrayDesordenado.sort((a, b) => {
+    return a-b
+})
+//ORDENA EL ARRAY EN ESTE CASO DE MAYOR A MENOR. PARA HACERLO AL REVES SERIA B-A
+//
+
+-----------------------------------------------------
+--------------DOM----------
+Instanciamos el script en el index.html arriba del cierre del body.
+
+//GETELEMENT ES MAS RAPIDO Y SIRVE PARA CUANDO SABEMOS QUE EL ELEMENTO TIENE SI O SI UN ID UNICO
+const elemento = document.getElementByID("ID") //llamar a elemento por ID
+
+//QUERYSELECTOR OBTIENE EL PRIMER ELEMENTO ENCONTRADO CON ESE NOMBRE/NOMBRE DE CLASE/ DE ID. MAS LENTO
+const elemento = document.querySelector('h1') //llamar elemento
+const elemento = document.querySelector('.h1') //llamar elemento x nombre de clase
+const elemento = document.querySelector('#h1') //llamar elemento x nombre de ID
+
+//INNERHTML ES LO QUE ESTA ESCRITO DENTRO DE UNA ETIQUETA
+//Lo puedo llamar mediante elemento.INNERHTML
+|---> Elemento.innerHTML = "Cambiando el texto del elemento mediante JS"
+
+//ADDEVENTLISTENER EN CLICK Y APLICANDO FUNCION
+const EditTitle = (elementID, text) => {
+    let title = document.getElementById(elementID);
+    title.innerHTML = `${text}`
+}
+
+const textButton = document.getElementById("button2")
+textButton.addEventListener('click', () => {
+    let promptText = prompt("Cambiar texto")
+    promptText
+    ? EditTitle("main-text", promptText)
+    : console.log("No hay cambios")
+})
+
+//titulo.classList.toggle("NuevaClase") //LE CAMBIAMOS
+LA CLASE AL ELEMENTO TITULO POR LA CLASE "NUEVACLASE"
+
+//CUANDO EL INPUT ESTA ACTIVO
+input.addEventListener("focus", () => {
+    input.style.backgroundColor = "blue"
+})
+
+//CUANDO EL INPUT NO ESTA ACTIVO
+input.addEventListener("blur", () => {
+    input.style.backgroundColor = "white"
+})
+
+//CUANDO SE DETECTA UN CAMBIO EN EL INPUT
+input.addEventListener("change", () => {
+    input.style.backgroundColor = "black"
+})
+
+//RESETEAR INPUT
+|---> input.value = "" //LE BORRO LO ESCRITO
+let button4 = document.getElementById("button4")
+button4.addEventListener("click", () => {
+    input.style.backgroundColor = "white";
+    input.value = ""
+})
+
+//REMOVER addEventListener
+input.removeEventListener("click", funcion)
+
+//PASAR DE STRING A JSON
+let objetoenjson = json.stringify(objeto)
+
+//PASAR DE JSON A STRING
+let objetoParseado = json.parse(objetoenjson)
+
+//LOCALSTORAGE
+LUGAR DONDE QUEDA ALOJADA INFORMACION DE NUESTRA PAGINA
+localstorage.setItem("Key(nombre para cuando la traigamos)", value(en este caso una variable a guardar))
+localstorage.getItem("Key") //TRAERLO
+//SIRVE PARA GUARDAR INFORMACION QUE NO QUEREMOS PERDER AL SALIR DE LA PAGINA
+//SE USA GENERALMENTE PARA GUARDAR DATOS NO SENSIBLES Y QUE QUEDEN ALMACENADOS
+//EN NUESTRO EQUIPO Y NO EN LA BASE DE DATOS PARA NO OCUPAR ESPACIO INNECESARIO.
+
+//MATH
+//REDONDEAR >< 5
+let redondear = (num) => {
+    return console.log(Math.round(num))
+} 
+redondear(3.6) //4
+
+//REDONDEAR HACIA ABAJO
+let redondear = (num) => {
+    return console.log(Math.floor(num))
+} 
+redondear(3.6) //3
+
+//REDONDEAR HACIA ARRIBA
+let redondear = (num) => {
+    return console.log(Math.ceil(num))
+} 
+redondear(3.6) //3
+
+//NUMERO RANDOM
+let random = () => {
+    return console.log(Math.random()*5) //ENTRE 0 Y 5
+} 
+
+//MAXIMO NUMERO ENTRE LISTA
+Math.max(lista de numeros)
+//MAXIMO EN ARRAY
+Math.max(...arraydenumeros)
+//MINIMO EN ARRAY
+Math.min(...arraydenumeros)
+
+//ELIMINAR PARTE DECIMAL
+Math.trunc(num)
+
+//DATE
+const hoy = new Date()
+
+const dia = hoy.getDay()
+
+const diaDelMes = hoy.getDate()
+
+.getMonth() //EMPIEZA A CONTAR DESDE EL 0 ASIQUE LE PODEMOS SUMAR 1
+
+.getFullYear()
+
+.getHours()
+
+const navidad = new Date("2025-12-25")
+navidad.setFullYear(2023)
+navidad.setMonth(9)
+
+//MOSTRAR FECHA LEGIBLE CON ZONA HORARIA DEL SERVIDOR HOSTEADO
+const fechaLegible = hoy.toLocaleDateString()
+console.log(fechaLegible)
+
+//MOSTRAR FECHA LEGIBLE FORMA 2 (MEJOR)
+const fechaLegible = hoy.toISOString().split("t")[0].split("-").reverse().join("/")
+console.log(fechaLegible) //DIA/MES/AÑO

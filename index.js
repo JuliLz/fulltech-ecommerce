@@ -11,6 +11,7 @@ const guardarCarrito = () => {
 //VARIABLES DE CONTAINERS, BOTONES, INPUTS ETC
 const prodContainer = document.querySelector(".product-grid")
 const btnAgregarCarrito = document.querySelector(".btnAddCart")
+const btnVerMas = document.querySelector(".btnVerMas")
 
 //FUNCION PLANTILLA INNERHTML
 const crearPlantillaProducto = (producto) => {
@@ -51,9 +52,21 @@ const renderizarProductos = (listaProductos) => {
     prodContainer.innerHTML += listaProductos.map(crearPlantillaProducto).join("")
 }
 
+//FUNCION VER MAS PRODUCTOS
+const verMasProductos = () => {
+    appState.indiceProductosActuales += 1;
+    const {productos, indiceProductosActuales} = appState
+    renderizarProductos(productos[indiceProductosActuales])
+    console.log(appState.indiceProductosActuales, appState.limiteProductos)
+    if ( appState.indiceProductosActuales ===  appState.limiteProductos - 1) {
+        btnVerMas.classList.add("ocultado")
+    }
+}
+
 //FUNCION INICIAR
 const init = () => {
-    renderizarProductos(productos)
+    renderizarProductos(appState.productos[0])
+    btnVerMas.addEventListener("click", verMasProductos)
 }
 
 init()

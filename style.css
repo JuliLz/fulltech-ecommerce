@@ -170,6 +170,12 @@ a {
   flex-wrap: wrap;
 }
 
+.btnVerMasContainer {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -472,6 +478,10 @@ a {
 
 .footer-links a {
   color: #9fb3cb;
+}
+
+.ocultado {
+  display: none;
 }
 
 @media (max-width: 900px) {
