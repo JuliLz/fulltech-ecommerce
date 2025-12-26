@@ -41,6 +41,42 @@ a {
   margin: 0 auto;
 }
 
+.carrito {
+  position: fixed;
+  top: 0;
+  right: -40%;
+  width: 40%;
+  height: 100vh;
+  background: var(--card);
+  border-left: 1px solid var(--card-border);
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
+  transition: right 300ms ease;
+  z-index: 20;
+  overflow-y: auto;
+  padding: 1.5rem;
+}
+
+.carritoHeader {
+  display: flex;
+  align-items: center;
+}
+
+.carrito.open {
+  right: 0;
+}
+
+.carrito.close {
+  right: -40%;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+body.carrito-open {
+  overflow-x: hidden;
+}
+
 .site-header {
   position: sticky;
   top: 0;

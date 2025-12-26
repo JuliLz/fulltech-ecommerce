@@ -181,6 +181,14 @@ const setearCantidad = (tamañoPagina) => {
   return listaProductos
 }
 
+//TOMAR ITEMS EN LOCALSTORAGE O ARRAY VACIO
+let listaProductos = JSON.parse(localStorage.getItem("carrito")) || []
+
+//GUARDAR EN LOCALSTORAGE
+const guardarEnLocalStorage = (listaProductos) => {
+  localStorage.setItem("carrito", JSON.stringify(listaProductos))
+}
+
 const appState = {
   productos: setearCantidad(4),
   limiteProductos: setearCantidad(4).length,

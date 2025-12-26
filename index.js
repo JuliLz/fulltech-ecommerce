@@ -3,11 +3,6 @@
 //LOCALSTORAGE ME DA UN STRING JSON Y CON PARSE LOS HAGO OBJETOS
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-//FUNCION PARA GUARDAR EL CARRITO. CADA ELEMENTO SE GUARDA EN EL LOCALSTORAGE EN FORMATO JSON
-const guardarCarrito = () => {
-    localStorage.setItem("carrito", JSON.stringify(carrito))
-}
-
 //VARIABLES DE CONTAINERS, BOTONES, INPUTS ETC
 const prodContainer = document.querySelector(".product-grid")
 const btnAgregarCarrito = document.querySelector(".btnAddCart")
@@ -16,6 +11,10 @@ const btnFiltroTodos = document.querySelector(".btnFiltroTodos")
 const btnFiltroPerifericos = document.querySelector(".btnFiltroPerifericos")
 const btnFiltroHardware = document.querySelector(".btnFiltroHardware")
 const btnFiltroMuebles = document.querySelector(".btnFiltroMuebles")
+const btnCarrito = document.querySelector(".cart-btn")
+const carritoContainer = document.querySelector(".carrito")
+const btnCerrarCarrito = document.querySelector(".btnCerrarCarrito")
+const carritoContainerItems = document.querySelector(".carritoItems")
 
 //FUNCION PLANTILLA INNERHTML
 const crearPlantillaProducto = (producto) => {
@@ -100,6 +99,36 @@ const filtrar = (filtro) => {
     btnVerMas.classList.add("ocultado")
 }
 
+//FUNCIONES CARRITO
+const abrirCarrito = () => {
+    carritoContainer.classList.add("open")
+    return
+}
+
+const cerrarCarrito = (e) => {
+    if (!e.target.classList.contains("open")){
+        carritoContainer.classList.remove("open")
+        return
+    }
+    carritoContainer.classList.remove("open")
+    return
+}
+
+//FUNCION AGREGAR AL CARRITO
+const agregarAlCarrito = () => { 
+}
+
+//FUNCION RENDERIZAR CARRITO
+const renderizarCarrito = () => {
+    if (!carrito.length) {
+        carritoContainerItems.innerHTML = `<span class="price" style="color:white; display:flex">No hay productos</span>`
+    } else {
+        carritoContainerItems.innerHTML = `
+        
+        `
+    }
+}
+
 //FUNCION INICIAR
 const init = () => {
     renderizarProductos(appState.productos[0])
@@ -108,6 +137,9 @@ const init = () => {
     btnFiltroHardware.addEventListener("click", () => { filtrar("Hardware") })
     btnFiltroMuebles.addEventListener("click", () => { filtrar("Muebles") })
     btnFiltroTodos.addEventListener("click", () => { filtrar() })
+    btnCarrito.addEventListener("click", abrirCarrito)
+    btnCerrarCarrito.addEventListener("click", cerrarCarrito)
+    document.addEventListener("DOMContentLoaded", renderizarCarrito)
 }
 
 
