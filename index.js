@@ -12,6 +12,9 @@ const guardarCarrito = () => {
 const prodContainer = document.querySelector(".product-grid")
 const btnAgregarCarrito = document.querySelector(".btnAddCart")
 const btnVerMas = document.querySelector(".btnVerMas")
+const btnFiltroPerifericos = document.querySelector(".btnFiltroPerifericos")
+const btnFiltroHardware = document.querySelector(".btnFiltroHardware")
+const btnFiltroMuebles = document.querySelector(".btnFiltroMuebles")
 
 //FUNCION PLANTILLA INNERHTML
 const crearPlantillaProducto = (producto) => {
@@ -57,16 +60,33 @@ const verMasProductos = () => {
     appState.indiceProductosActuales += 1;
     const {productos, indiceProductosActuales} = appState
     renderizarProductos(productos[indiceProductosActuales])
-    console.log(appState.indiceProductosActuales, appState.limiteProductos)
     if ( appState.indiceProductosActuales ===  appState.limiteProductos - 1) {
         btnVerMas.classList.add("ocultado")
     }
+}
+
+//FUNCION PARA LOS FILTROS
+const filtrar = (filtro) => {
+    let listaProdFiltrados = []
+    for (let i = 0; i < productos.length; i++) {
+        if(productos[i].categoria === filtro) {
+            listaProdFiltrados.push(productos[i])
+        } 
+    }
+    prodContainer.innerHTML = ""
+    renderizarProductos(listaProdFiltrados)
+    btnVerMas.classList.add("ocultado")
 }
 
 //FUNCION INICIAR
 const init = () => {
     renderizarProductos(appState.productos[0])
     btnVerMas.addEventListener("click", verMasProductos)
+    btnFiltroPerifericos.addEventListener("click", () => { filtrar("Perifericos") })
+    btnFiltroHardware.addEventListener("click", () => { filtrar("Hardware") })
+    btnFiltroMuebles.addEventListener("click", () => { filtrar("Muebles") })
 }
+
+
 
 init()

@@ -176,6 +176,12 @@ a {
   padding-top: 10px;
 }
 
+.filtrosContainer {
+  display: flex;
+  padding-bottom: 30px;
+  justify-content: space-around;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;

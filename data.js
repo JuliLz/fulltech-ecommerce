@@ -148,7 +148,27 @@ const productos = [
     imagen: "https://images.unsplash.com/photo-1716062890647-60feae0609d0?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     disponibilidad: "si",
     valoracion: 4.6
-  }
+  },
+  {
+    id: 16,
+    nombre: "Silla Gamer ErgoRed",
+    descripcion: "Ergonomía superior con almohadillas lumbares, reclinable hasta 180 grados.",
+    categoria: "Muebles",
+    precio: 35000,
+    imagen: "https://images.unsplash.com/photo-1612011213721-3936d387f318?q=80&w=638&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    disponibilidad: "si",
+    valoracion: 4.4
+  },
+  {
+    id: 17,
+    nombre: "Silla Gamer ErgoRed",
+    descripcion: "Ergonomía superior con almohadillas lumbares, reclinable hasta 180 grados.",
+    categoria: "Muebles",
+    precio: 35000,
+    imagen: "https://images.unsplash.com/photo-1612011213721-3936d387f318?q=80&w=638&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    disponibilidad: "si",
+    valoracion: 4.4
+  },
 ];
 
 let cantProductos = productos.length
