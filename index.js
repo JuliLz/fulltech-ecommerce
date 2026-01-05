@@ -14,6 +14,7 @@ const carritoTotalSpan = document.querySelector(".carrito-total")
 const carritoCantidadSpan = document.querySelector(".carrito-cantidad")
 const btnComprar = document.querySelector(".btnComprar")
 const btnVaciarCarrito = document.querySelector(".btnVaciarCarrito")
+const agregarModal = document.querySelector(".agregar-modal")
 
 //FUNCION PLANTILLA INNERHTML
 const crearPlantillaProducto = (producto) => {
@@ -36,14 +37,14 @@ const crearPlantillaProducto = (producto) => {
         }</span>
         </div>
         <button type="button" class="btn primary btnAddCart"
-        data-id="${id}
-        data-nombre="${nombre}
-        data-descripcion="${descripcion}
-        data-categoria="${categoria}
-        data-precio="${precio}
-        data-imagen="${imagen}
-        data-disponibilidad="${disponibilidad}
-        data-valoracion="${valoracion}
+        data-id="${id}"
+        data-nombre="${nombre}"
+        data-descripcion="${descripcion}"
+        data-categoria="${categoria}"
+        data-precio="${precio}"
+        data-imagen="${imagen}"
+        data-disponibilidad="${disponibilidad}"
+        data-valoracion="${valoracion}"
         ">Agregar al carrito</button>
     </article>
     `
@@ -114,14 +115,48 @@ const cerrarCarrito = (e) => {
 }
 
 //FUNCION AGREGAR AL CARRITO
-const agregarAlCarrito = () => { 
+const agregarAlCarrito = (e) => { 
+    if (!e.target.classList.contains("btnAddCart")) {
+        return
+    }
+    console.log("apretaste")
+    const producto = crearDataProductoCarrito(e.target.dataset)
+    if(existeEnElCarrito(producto)) {
+        sumarUnidadCarrito(producto)
+        alert("sumado")
+    } else {
+        crearProductoEnCarrito(producto)
+        alert("agregado")
+    }
+    actualizarCarrito()
+}
+
+const sumarUnidadCarrito = (producto) => {
+    carrito = carrito.map((item) => {
+        return item.id === producto.id 
+        ? {...item, cantidad: item.cantidad + 1}
+        : item
+    })
+}
+
+const crearProductoEnCarrito = (producto) => {
+    carrito = [...carrito, {...producto, cantidad: 1}]
+}
+
+const existeEnElCarrito = (producto) => {
+    return carrito.find((item)=> item.id === producto.id)
+}
+
+const crearDataProductoCarrito = (producto) => {
+    const {id, nombre, precio, imagen} = producto
+    return {id,nombre,precio,imagen}
 }
 
 //FUNCION PLANTILLA CARRITO
 const crearPlantillaCarrito = (producto) => {
     const {id, nombre, precio, imagen, cantidad} = producto;
     return `
-        <article class="card product-card">
+        <article class="card product-card" style="width:300px;heigth:300px">
             <h3>${nombre}</h3>
             <img src=${imagen}></img>
             <div class="price-line">
@@ -132,8 +167,7 @@ const crearPlantillaCarrito = (producto) => {
             ">+</button>
             <span class="price">${cantidad}</span>
             <button type="button" class="btn secondary"
-            data-id="${id}
-            ">-</button>
+            data-id="${id}">-</button>
             <span class="price">Disponibles: ${cantidad}</span>
         </article>
        ` 
@@ -146,27 +180,35 @@ const renderizarCarrito = () => {
         return
     }
     carritoContainerItems.innerHTML = carrito.map((producto) => {
-        crearPlantillaCarrito(producto).join("")
-    })
+        return crearPlantillaCarrito(producto)
+    }).join("")
 }
 
 //OBTENER TOTAL DEL CARRITO
 const obtenerTotalCarrito = () => {
     return carrito.reduce((acumulador, producto) => {
-        acumulador + Number(producto.precio) * producto.cantidad
+        return acumulador + Number(producto.precio) * producto.cantidad
     }, 0)
 }
 
 //FUNCION MOSTRAR PRECIO CARRITO
 const mostrarTotalCarrito = () => {
-    carritoTotalSpan.innerHTML = `Total $${obtenerTotalCarrito().toFixed(2)}`
+    carritoTotalSpan.innerHTML = `Total $${obtenerTotalCarrito()}`
 }
 
 //FUNCION MOSTRAR CANTIDAD CARRITO
 const mostrarCantidadItemsCarrito = () => {
     carritoCantidadSpan.textContent = carrito.reduce((acumulador, producto) => {
-        acumulador + producto.cantidad
+        return acumulador + producto.cantidad
     }, 0)
+}
+
+//FUNCION ACTUALIZAR CARRITO
+const actualizarCarrito = () => {
+    renderizarCarrito()
+    obtenerTotalCarrito()
+    mostrarCantidadItemsCarrito()
+    mostrarTotalCarrito()
 }
 
 //FUNCION INICIAR
@@ -182,6 +224,7 @@ const init = () => {
     document.addEventListener("DOMContentLoaded", renderizarCarrito)
     document.addEventListener("DOMContentLoaded", mostrarTotalCarrito)
     document.addEventListener("DOMContentLoaded", mostrarCantidadItemsCarrito)
+    prodContainer.addEventListener("click", agregarAlCarrito)
 }
 
 
