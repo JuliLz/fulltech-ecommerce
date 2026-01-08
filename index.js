@@ -15,6 +15,8 @@ const carritoCantidadSpan = document.querySelector(".carrito-cantidad")
 const btnComprar = document.querySelector(".btnComprar")
 const btnVaciarCarrito = document.querySelector(".btnVaciarCarrito")
 const agregarModal = document.querySelector(".agregar-modal")
+const btnSumarUno = document.querySelector(".btnSumarUno")
+const btnRestarUno = document.querySelector(".btnRestarUno")
 
 //FUNCION PLANTILLA INNERHTML
 const crearPlantillaProducto = (producto) => {
@@ -119,14 +121,17 @@ const agregarAlCarrito = (e) => {
     if (!e.target.classList.contains("btnAddCart")) {
         return
     }
-    console.log("apretaste")
+    if(e.target.dataset.disponibilidad === "no") {
+        alert("Este producto está agotado")
+        return
+    }
     const producto = crearDataProductoCarrito(e.target.dataset)
     if(existeEnElCarrito(producto)) {
         sumarUnidadCarrito(producto)
-        alert("sumado")
+        abrirCarrito()
     } else {
         crearProductoEnCarrito(producto)
-        alert("agregado")
+        abrirCarrito()
     }
     actualizarCarrito()
 }
@@ -137,6 +142,71 @@ const sumarUnidadCarrito = (producto) => {
         ? {...item, cantidad: item.cantidad + 1}
         : item
     })
+}
+
+const manejarCantidad = (e) => {
+    if(e.target.classList.contains("btnSumarUno")) {
+        sumarUnoBtn(e.target.dataset.id)
+    } else if (e.target.classList.contains("btnRestarUno")) {
+        restarUnoBtn(e.target.dataset.id)
+    }
+    actualizarCarrito()
+}
+
+const sumarUnoBtn = (id) => {
+    const prodExistente = carrito.find((item)=>item.id === id)
+    sumarUnidadCarrito(prodExistente)
+}
+
+const restarUnoBtn = (id) => {
+    const prodExistente = carrito.find((item) => item.id === id)
+    if (prodExistente.cantidad === 1) {
+        if(window.confirm("¿Desea eliminar el producto del carrito?")){
+            eliminarProductoCarrito(prodExistente)
+        }
+        return;
+    }
+    restarUnidadCarrito(prodExistente)
+}
+
+const restarUnidadCarrito = (prodExistente) => {
+    carrito = carrito.map((item)=>{
+        return item.id === prodExistente.id
+        ? {...item, cantidad: item.cantidad - 1}
+        : item
+    })
+    actualizarCarrito()
+}
+
+
+const eliminarProductoCarrito = (productoExistente) => {
+    carrito = carrito.filter((producto)=> producto.id !== productoExistente.id)
+    actualizarCarrito()
+}
+
+const vaciarCarrito = () => {
+    if(window.confirm("¿Desea vaciar el carrito?")){
+        carrito = []
+        actualizarCarrito()
+        return
+    }
+}
+
+const manejarBotonesCarrito = (e) => {
+    if(!carrito.length) {
+        return
+    }
+    if(e.target.classList.contains("btnVaciarCarrito")){
+        vaciarCarrito()
+    } else if (e.target.classList.contains("btnComprar")) {
+        if(window.confirm(`¿Desea realizar la compra por $${obtenerTotalCarrito()}?`)) {
+            alert("Gracias por su compra")
+            carrito = []
+            actualizarCarrito()
+        }
+        return
+    }
+    
 }
 
 const crearProductoEnCarrito = (producto) => {
@@ -156,19 +226,17 @@ const crearDataProductoCarrito = (producto) => {
 const crearPlantillaCarrito = (producto) => {
     const {id, nombre, precio, imagen, cantidad} = producto;
     return `
-        <article class="card product-card" style="width:300px;heigth:300px">
+        <article class="card product-card" style="width:300px">
             <h3>${nombre}</h3>
             <img src=${imagen}></img>
             <div class="price-line">
                 <span class="price">$${precio}</span>
             </div>
-            <button type="button" class="btn secondary"
-            data-id="${id}
-            ">+</button>
-            <span class="price">${cantidad}</span>
-            <button type="button" class="btn secondary"
+            <button type="button" class="btn secondary btnSumarUno"
+            data-id="${id}">+</button>
+            <span class="price" style="text-align:center">${cantidad}</span>
+            <button type="button" class="btn secondary btnRestarUno"
             data-id="${id}">-</button>
-            <span class="price">Disponibles: ${cantidad}</span>
         </article>
        ` 
 }
@@ -225,6 +293,8 @@ const init = () => {
     document.addEventListener("DOMContentLoaded", mostrarTotalCarrito)
     document.addEventListener("DOMContentLoaded", mostrarCantidadItemsCarrito)
     prodContainer.addEventListener("click", agregarAlCarrito)
+    carritoContainer.addEventListener("click", manejarCantidad)
+    carritoContainer.addEventListener("click", manejarBotonesCarrito)
 }
 
 
