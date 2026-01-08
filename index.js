@@ -104,16 +104,30 @@ const filtrar = (filtro) => {
 //FUNCIONES CARRITO
 const abrirCarrito = () => {
     carritoContainer.classList.add("open")
+    document.body.classList.add("no-scroll")
     return
 }
 
 const cerrarCarrito = (e) => {
     if (!e.target.classList.contains("open")){
         carritoContainer.classList.remove("open")
+        document.body.classList.remove("no-scroll")
         return
     }
     carritoContainer.classList.remove("open")
+    document.body.classList.remove("no-scroll")
     return
+}
+
+const cerrarCarritoClickFuera = (e) => {
+    if (!carritoContainer.classList.contains("open")) {
+        return
+    }
+    // Verificar si el click fue fuera del carrito y del botón de abrir carrito
+    if (!carritoContainer.contains(e.target) && !btnCarrito.contains(e.target)) {
+        carritoContainer.classList.remove("open")
+        document.body.classList.remove("no-scroll")
+    }
 }
 
 //FUNCION AGREGAR AL CARRITO
@@ -128,10 +142,8 @@ const agregarAlCarrito = (e) => {
     const producto = crearDataProductoCarrito(e.target.dataset)
     if(existeEnElCarrito(producto)) {
         sumarUnidadCarrito(producto)
-        abrirCarrito()
     } else {
         crearProductoEnCarrito(producto)
-        abrirCarrito()
     }
     actualizarCarrito()
 }
@@ -290,6 +302,7 @@ const init = () => {
     btnFiltroTodos.addEventListener("click", () => { filtrar() })
     btnCarrito.addEventListener("click", abrirCarrito)
     btnCerrarCarrito.addEventListener("click", cerrarCarrito)
+    document.addEventListener("click", cerrarCarritoClickFuera)
     document.addEventListener("DOMContentLoaded", renderizarCarrito)
     document.addEventListener("DOMContentLoaded", mostrarTotalCarrito)
     document.addEventListener("DOMContentLoaded", mostrarCantidadItemsCarrito)

@@ -39,6 +39,12 @@ body {
   overflow-x: hidden;
 }
 
+body.no-scroll {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
 a {
   color: inherit;
 
@@ -104,9 +110,13 @@ a {
 /* HEADER */
 
 .site-header {
-  position: sticky;
+  position: fixed;
 
   top: 0;
+
+  left: 0;
+
+  right: 0;
 
   z-index: 10;
 
@@ -190,9 +200,8 @@ a {
 }
 
 /* HERO */
-
 .hero {
-  padding: 6rem 0 4rem;
+  padding-top: 8rem;
 }
 
 .hero-grid {
@@ -220,6 +229,8 @@ a {
 }
 
 .hero-copy h1 {
+  display: flex;
+  justify-content: center;
   font-size: clamp(2.6rem, 4vw, 3.4rem);
 
   line-height: 1.15;
@@ -228,13 +239,15 @@ a {
 }
 
 .hero-copy p {
+  display: flex;
+  justify-content: center;
   color: var(--muted);
-
-  max-width: 34rem;
 }
 
 .hero-actions {
   display: flex;
+
+  justify-content: center;
 
   gap: 1rem;
 
@@ -280,7 +293,8 @@ a {
 /* STATS */
 
 .hero-stats {
-  display: grid;
+  display: flex;
+  justify-content: center;
 
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
 
@@ -306,7 +320,7 @@ a {
 .section-head {
   display: flex;
 
-  justify-content: space-between;
+  justify-content: center;
 
   gap: 2rem;
 
@@ -458,7 +472,8 @@ a {
 }
 
 @media (max-width: 640px) {
-  body, html {
+  body,
+  html {
     max-width: 100%;
     overflow-x: hidden;
     text-align: center;
@@ -483,12 +498,12 @@ a {
     text-align: center;
   }
   .carrito {
-  position: fixed;
+    position: fixed;
 
-  top: 0;
+    top: 0;
 
-  right: -100%;
-}
+    right: -100%;
+  }
 }
 
 /* ===== CARD CARRITO ===== */
